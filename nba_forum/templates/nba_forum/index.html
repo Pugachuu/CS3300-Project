@@ -1,0 +1,24 @@
+{% extends 'nba_forum/base_template.html' %}
+{% load static %}
+
+
+<!-- Replace block content in base_template.html -->
+{% block content %}
+<style>
+    body {
+        background-color: rgb(238, 103, 48);
+    }
+</style>
+<h1 style="text-align:center;">Welcome to the NBA Forums</h1>
+<div style="text-align: center;">
+    <img src="{% static 'images/hooping.jpg' %}" class = "img-fluid" alt="Basketball going into hoop">
+</div>
+<h2 style="text-align:center">What are we about?</h2>
+<h3 style="text-align:center">Are you passionate about your NBA team? did you like that they played well against their rivals last week?
+Are you disappointed that Jokic missed a crucial rebound to win an important game in the in-season tournament?
+Tell us all about it! Navigate to your favorite team's page and post about how you feel!</h3>
+
+<div class="sr-widget" data-sr-widget="us.season.nba.standings" data-sr-season-id="85502"></div>
+<script type="application/javascript" src="https://widgets.media.sportradar.com/uscommon/widgetloader" data-sr-language="en_us" async=""></script>
+
+{% endblock %}

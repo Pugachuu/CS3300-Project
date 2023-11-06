@@ -1,0 +1,19 @@
+<!--Inheret from base template-->
+{% extends 'nba_forum/base_template.html' %}
+
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(238, 103, 48);
+    }
+</style>
+<p> Are you sure you want to delete "{{item}}"?</p>
+
+<form action = "" method='POST'>
+{% csrf_token %}
+<a href="{% url 'team' %}"> Cancel</a>
+<input type = "submit" name="Confirm">
+</form>
+
+{% endblock %}

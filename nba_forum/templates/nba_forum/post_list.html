@@ -1,0 +1,21 @@
+<!-- inherit from base.html-->
+{% extends 'nba_forum/base_template.html' %}
+
+
+{% block content %}
+<h1 style="text-align: center;">Teams in Alphabetical Order</h1>
+{% if post_list %}
+<ul>
+    
+{% for post in post_list %}
+<!--list the title of each post-->
+<li>
+<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+</li>
+{% endfor %}
+</ul>
+<!--else display this error message-->
+{% else %}
+<p style="text-align: center;">Seems like there's no Teams in the NBA :D</p>
+{% endif %}
+{% endblock %}

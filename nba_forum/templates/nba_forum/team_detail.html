@@ -1,0 +1,48 @@
+{% extends 'nba_forum/base_template.html' %}
+
+
+{% block content %}
+<!--get the values from the database for this model and format in html-->
+<style>
+    body {
+        background-color: rgb(238, 103, 48);
+    }
+</style>
+<h1 style="text-align: center">{{ team.city }} {{ team.name }}</h1>
+
+
+<!--button for creating a new post in that team page-->
+<div style="text-align: center">
+    <a class="btn btn-secondary" href="{% url 'create_post' team.id %}" role="button">New Post</a>
+</div>
+
+{% if post %}
+<ul>
+    
+{% for post in post %}
+<!--list the title of each post as a link to their detail page-->
+<table>
+    <tr><strong>
+    {{ post.title }}:
+    </tr>
+    <br>
+    <tr>
+        <td>
+            <a class="btn btn-secondary" href="{{ post.get_absolute_url }}" role="button">View</a>
+        </td>
+        <td>
+            <a class="btn btn-secondary" href="{% url 'update_post' team.id post.id%}" role="button">Update</a>
+        </td>
+        <td>
+            <a class="btn btn-secondary" href="{% url 'delete_post' team.id post.id%}" role="button">Delete</a>
+        </td>
+    </tr>
+    
+</table>
+{% endfor %}
+</ul>
+<!--else display this error message-->
+{% else %}
+<p style="text-align: center">This team currently has no posts. Be the first!</p>
+{% endif %}
+{% endblock %}

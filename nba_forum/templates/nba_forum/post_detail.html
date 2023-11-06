@@ -1,0 +1,18 @@
+{% extends 'nba_forum/base_template.html' %}
+
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(238, 103, 48);
+    }
+</style>
+<div style="text-align: center">
+<h1>{{ post.title }}</h1>
+
+
+<p><strong>{{ post.post }}</p>
+<p><strong>Rating Given: {{ post.rating }}</p>
+</div>
+
+{% endblock %}

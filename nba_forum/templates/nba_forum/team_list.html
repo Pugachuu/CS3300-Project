@@ -1,0 +1,26 @@
+<!-- inherit from base.html-->
+{% extends 'nba_forum/base_template.html' %}
+
+
+{% block content %}
+<style>
+    body {
+        background-color: rgb(238, 103, 48);
+    }
+</style>
+<h1 style="text-align: center">Teams in Alphabetical Order</h1>
+{% if team_list %}
+<ul>
+    
+{% for team in team_list %}
+<!--list the name of each team as a link to their detail page-->
+<li>
+<a href="{{ team.get_absolute_url }}" style="color:black">{{ team.city }} {{ team.name }}</a>
+</li>
+{% endfor %}
+</ul>
+<!--else display this error message-->
+{% else %}
+<p style="text-align: center">There are no teams in the NBA right now :D</p>
+{% endif %}
+{% endblock %}
