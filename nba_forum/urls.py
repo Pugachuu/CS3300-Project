@@ -16,9 +16,10 @@ path('team/<int:team_id>/create_post/', views.createPost, name='create_post'),
 path('team/<int:team_id>/update_post/<int:id>', views.updatePost, name='update_post'),
 #URL to delete a post from a team page
 path('team/<int:team_id>/delete_post/<int:id>', views.deletePost, name='delete_post'),
-#URL to register an account witht he web app
+#URL to register an account with The web app
 path('accounts/register/', views.registerPage, name='register_page'),
+#URL to login an account with the web app
 path('accounts/login/', views.userLogin, name='login'),
+#URL to logout when logged in with an account on the web app
 path('accounts/logout/', views.userLogout, name='logout'),
-#path('accounts/profile/', views.Profile, name = 'profile'),
 ]
