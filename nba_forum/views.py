@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from .models import *
 from .forms import *
 from django.views import generic
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+from .decorator import allowed_users
+
+
 
 # Create your views here.
 def index(request):
@@ -31,7 +36,8 @@ class PostsListView(generic.ListView):
 class PostsDetailView(generic.DetailView):
     model = Post
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['posters'])
 def createPost(request, team_id):
 
     form = PostForm()
@@ -55,6 +61,8 @@ def createPost(request, team_id):
     return render(request, 'nba_forum/post_form.html', context)
 
 #Method to update a post in a team page
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['posters'])
 def updatePost(request, team_id, id):
     #Sets the team based on the id from the url
     teams = Team.objects.get(pk=team_id)
@@ -82,6 +90,8 @@ def updatePost(request, team_id, id):
     return render(request, 'nba_forum/post_form.html', context)
 
 #Method to delete a post from a team page
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['posters'])
 def deletePost(request, team_id, id):
 
     #Sets the post based on the id from the url
@@ -96,3 +106,44 @@ def deletePost(request, team_id, id):
 
     context = {'item': post}
     return render(request, 'nba_forum/delete.html', context)
+
+#Method used to register a user to the web app
+def registerPage(request):
+   if request.method == 'POST':
+       form = CreateUserForm(request.POST)
+
+       if form.is_valid():
+           form.save()
+           return redirect('index')
+    
+   else:
+       form = CreateUserForm()
+    
+   context = {'form': form}
+   return render(request, 'registration/register.html', context)
+
+#Method used to login the user and authenticate that the user exists
+def userLogin(request):
+    if request.method == 'POST':
+        form = Authenticate(request, data=request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                login(request, user)
+
+                return redirect('index')
+    else:
+        form = Authenticate()
+    
+    context = {'form': form}
+    return render(request, 'registration/login.html', context)
+
+#Method used to logout the user
+def userLogout(request):
+    logout(request)
+    return redirect('index')
+
